@@ -1,38 +1,33 @@
 1. Design a course management system
 - Course
-  Data: Name, CourseNumber, MeetingTime, MeetingRoom, ClassSize
+  Data: Name, Syllabus, Assignment, Document, zoomLink
   Behaviors: 
  -Student
   Data: Name, loginCredential
-  Behaviors: login, search, register, drop, wait
+  Behaviors: login, search, lookover, completeTask, discuss, watchVideo
  -CourseManagementWebsite
-  Data: Administrator;
-  Behaviors: allocateAdministrator, publishCourseInformation
- -Administrator
-  Data: Name
-  Behaviors: processStudentRegistration, allocateAviaibleSeat, allocateAdministrator, letInWaitingList
+  Data: Name;
+  Behaviors: publish, grade
 Sequence of invoking behaviors on objects
   Student Rachel;
-  Student Oliver;
   Course INFO5100;
-  CourseManagementWebsite myNEU;
-  Administrator Susan = myNEU.allocateAdministrator;
+  CourseManagementWebsite Canvas;
   Rachel.login(loginCredential);
-  Oliver.login(loginCredential);
-  oliver.register(INFO5100);
   Rachel.search(INFO5100);
-  if INFO5100 can be registered
-    Rachel.register(INFO5100);
-    if INFO5100 is Full and have waiting seats
-        susan.processStudentRegigtration(Rachel);
-        susan.letInWaitingList(Rachel);
-        if Oliver.drop(INFO5100)；
-          myNEU.publishCourseInformation(INFOR5100);
-          susan.allocateAviaibleSeat(Rachel);
-        else
-          Rachel.wait(INFO5100);
+  if Canvas publish infomation about INFO5100
+    Rachel.lookover(INFO5100.Syllabus, INFO5100.Assignment, INFO5100.Document, INFO5100.zoomLink);
+    if INFO5100 publish a document
+      Rachel.discuss(INFO5100.document)；
+      Canvas.grade(Rachel.discuss(INFO5100.document));
+    if INFO5100 publish an assignment
+      Rachel.completeTask(INFO5100.assignment)；
+      Canvas.grade(Rachel.completeTask(INFO5100.assignment));
+    if Rachel need take INFO5100 class
+      Rachel.watchVideo(INFO5100.zoomLink);
+    if Rachel want to learn the course outline
+      Rachel.lookover(INFO5100.Syllabus);
    else
-    INFO5100 can't be registered
+    There is no information about INFO5100;
       
 2. Design a pet adoption platform
  -Adopter
@@ -91,7 +86,41 @@ Sequence of invoking behaviors on objects
     else
       no suitable ticket;
   
-4.Design a course registration platform.
+4. Design a course registration platform
+ - Course
+  Data: Name, CourseNumber, MeetingTime, MeetingRoom, ClassSize
+  Behaviors: 
+ -Student
+  Data: Name, loginCredential
+  Behaviors: login, search, register, drop, wait
+ -CourseRegistrationWebsite
+  Data: Administrator;
+  Behaviors: allocateAdministrator, publishCourseInformation
+ -Administrator
+  Data: Name
+  Behaviors: processStudentRegistration, allocateAviaibleSeat, allocateAdministrator, letInWaitingList
+Sequence of invoking behaviors on objects
+  Student Rachel;
+  Student Oliver;
+  Course INFO5100;
+  CourseRegistrationWebsite myNEU;
+  Administrator Susan = myNEU.allocateAdministrator;
+  Rachel.login(loginCredential);
+  Oliver.login(loginCredential);
+  oliver.register(INFO5100);
+  Rachel.search(INFO5100);
+  if INFO5100 can be registered
+    Rachel.register(INFO5100);
+    if INFO5100 is Full and have waiting seats
+        susan.processStudentRegigtration(Rachel);
+        susan.letInWaitingList(Rachel);
+        if Oliver.drop(INFO5100)；
+          myNEU.publishCourseInformation(INFOR5100);
+          susan.allocateAviaibleSeat(Rachel);
+        else
+          Rachel.wait(INFO5100);
+   else
+    INFO5100 can't be registered
       
    
    
