@@ -35,12 +35,12 @@ Sequence of invoking behaviors on objects
     INFO5100 can't be registered
       
 2. Design a pet adoption platform
+ -Adopter
+  Data: Name, Background, loginCredential, petPreference, adoptionReason
+  Behaviors: login, search, applyForAdopt, submitInfor, adoptPet 
  -Pet
   Data: Name, Type, Color, Characteristic
   Behaviors:
- -Adopter
-  Data: Name, Background, loginCredential, petPreference, adoptionReason
-  Behaviors: login, search, applyForAdopt, submitInfor, adoptPet
  -AdoptionCenter
   Data: Name
   Behaviors: publishPetInfo, processAdopterInfo, waitNextAdopter
@@ -61,5 +61,19 @@ Sequence of invoking behaviors on objects
    else
       lucky can not be adopted;
  
-3.Design an app to book airline ticket.
-    
+3. Design an app to book airline ticket.
+  -Customer
+   Data: Name, phone, credit card, emailAddress, loginCredential
+   Behaviors: login, search, book, refund
+  -Airline
+   Data: Time, Price, seatLevel, departurePlace, arrivalPlace, 
+  -AirlineTicketAgency
+   Data: Courier
+   Behaviors: allocateCourier, screenTicket 
+Sequence of invoking behaviors on objects
+   AirlineTicketAgency Feizhu;
+   Customer Rachel;
+   Rachel.login(loginCredential);
+   
+   
+   
