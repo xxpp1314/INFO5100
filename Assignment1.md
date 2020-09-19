@@ -63,17 +63,35 @@ Sequence of invoking behaviors on objects
  
 3. Design an app to book airline ticket.
   -Customer
-   Data: Name, phone, credit card, emailAddress, loginCredential
-   Behaviors: login, search, book, refund
+   Data: Name, phone, creditCard, emailAddress, loginCredential
+   Behaviors: login, search, book, cancelTicket
   -Airline
-   Data: Time, Price, seatLevel, departurePlace, arrivalPlace, 
+   Data: Time, Price, seatLevel, departurePlace, arrivalPlace
+   Behaviors:
   -AirlineTicketAgency
    Data: Courier
-   Behaviors: allocateCourier, screenTicket 
+   Behaviors: allocateCourier, refund, sendReceipt, checkout
+  -Courier
+   Data: Name
+   Behaviors: contactCustomer
 Sequence of invoking behaviors on objects
    AirlineTicketAgency Feizhu;
    Customer Rachel;
+   Airline SeaToSfo = Rachel.search(Time, Price, seatLevel, departurePlace, arrivalPlace);
+   Courier Oliver = Feizhu.allocateCurier;
    Rachel.login(loginCredential);
-   
+   if Feuzhu has suitable ticket
+      Rachel.book(SeaToSfo);
+      Feizhu.checkout(Rachel.emailAddress, Rachel.creditCard, Rachel.phone);
+      Feizhu.sendReceipt(Rachel.emailAddress);
+      if Rachel doesn't want this ticket
+        Rachel.cancelTicket(SeaToSfo);
+        Oliver.contactCustomer(Rachel.phone);
+        Feizhu.refund(SeaToSfo);
+    else
+      no suitable ticket;
+  
+4.Design a course registration platform.
+      
    
    
