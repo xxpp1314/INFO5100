@@ -1,6 +1,6 @@
 1. Design a course management system
 - Course
-	Data: Name, CourseNumber, MeetingTime, MeetingRoom, ClassSize
+  Data: Name, CourseNumber, MeetingTime, MeetingRoom, ClassSize
   Behaviors: 
  -Student
   Data: Name, loginCredential
@@ -24,12 +24,23 @@ Sequence of invoking behaviors on objects
   if INFO5100 can be registered
     Rachel.register(INFO5100);
     if INFO5100 is Full and have waiting seats
-          susan.processStudentRegigtration(Rachel);
-          susan.letInWaitingList(Rachel);
-          Oliver.drop(INFO5100)；
+        susan.processStudentRegigtration(Rachel);
+        susan.letInWaitingList(Rachel);
+        if Oliver.drop(INFO5100)；
           myNEU.publishCourseInformation(INFOR5100);
           susan.allocateAviaibleSeat(Rachel);
-    else
-      INFO5100 can't be registered
+   else
+    INFO5100 can't be registered
       
+2. Design a pet adoption platform
+-Pet
+ Data: Name, Type, Characteristic
+ Behaviors:
+-Adopter
+ Data: Name, Background, loginCredential, petPreference
+ Behaviors: login, submitInformation, adoptPet
+-Adoption Center
+ Data: Name
+ Behaviors: publishPetInfo, processAdopterInfo, 
+ 
     
