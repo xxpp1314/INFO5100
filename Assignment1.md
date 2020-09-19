@@ -122,5 +122,13 @@ Sequence of invoking behaviors on objects
    else
     INFO5100 can't be registered
       
-   
-   
+ 5. Order food in a food delivery app 
+   -Customer
+    Data: Name, foodPreference, Address, Phone, creditCard, loginCredential
+    Behaviors: login, buy, writereview, requestCalcelOrder, requestRefund, search
+   -Take-out Restaurant
+    Data: Name, Computer
+    Behaviors: sendReceipt, refund, allocateDeliver, prepareFood
+   -Deliver
+    Data: Name
+    Behaviors: contactCustomer, deliverFood
