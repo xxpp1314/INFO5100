@@ -122,13 +122,41 @@ Sequence of invoking behaviors on objects
    else
     INFO5100 can't be registered
       
- 5. Order food in a food delivery app 
-   -Customer
-    Data: Name, foodPreference, Address, Phone, creditCard, loginCredential
-    Behaviors: login, buy, writereview, requestCalcelOrder, requestRefund, search
-   -Take-out Restaurant
-    Data: Name, Computer
-    Behaviors: sendReceipt, refund, allocateDeliver, prepareFood
-   -Deliver
-    Data: Name
-    Behaviors: contactCustomer, deliverFood
+5. Order food in a food delivery app 
+  -Customer
+   Data: Name, foodPreference, Address, Phone, creditCard, loginCredential
+   Behaviors: login, buy, writereview, applyCalcelOrder, applyRefund, search
+  -Take-outRestaurant
+   Data: Food
+   Behaviors: sendReceipt, refund, allocateDeliver, prepareFood, checkout
+  -Food
+   Data: size, price, type, taste
+   Behaviors: 
+  -Deliver
+   Data: Name
+   Behaviors: contactCustomer, deliverFood
+Sequence of invoking behaviors on objects  
+   Customer Rachel;
+   Take-outRestaurant yelp;
+   Rachel.login(loginCredential);
+   Food ChineseFood = Rachel.search(size, price, type, taste);
+   if yelp has suitable Chinesefood
+    Rachel.buy(ChineseFood);
+    yelp.checkout(Rachel.address, Rachel.phone, Rachel.creditCard);
+      if Rachel want to buy another food
+        Rachel.applyCancelOrder(ChineseFood);
+        yelp.refund(ChineseFood);
+      else
+        yelp.prepareFood(ChineseFood);
+        Deliver Oliver = yelp.allocateDeliver;
+        Oliver.contactCustomer(Rachel);
+        Oliver.deliverFood(ChineseFood, Rachel.address);
+        if Rachel love this food
+          Rachel.writeReview("The food is delicious");
+        else 
+          Rachel.writeReview("I will not eat this food again");
+          Rachel.applyRefund(ChineseFood, yelp);
+          yelp.refund(Rachel);
+     else
+        yelp hasn't this kind of food;
+        
