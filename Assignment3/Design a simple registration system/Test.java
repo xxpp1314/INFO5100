@@ -5,7 +5,7 @@ public class Test {
     public static void main(String[] args) {
         Student a = new Student("Yinxing", 123);
         Student b = new Student("Rachel", 456);
-        Course one = new Course("INFO5100", 9);
+        Course one = new Course("INFO5100", 2);
         System.out.println("Does INFO5100 is full? " + one.isFull());
         one.registerStudent(a);
         one.registerStudent(b);
