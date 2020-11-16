@@ -68,6 +68,7 @@ public class TicTacToe {
         int row = (pos - 1) / 3 * 2;
         int col = (pos - 1) % 3 * 2;
         gameBoard[row][col] = symbol;
+        printGameBoard(gameBoard);
 
     }
 
