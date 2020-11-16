@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class BankAccount {
     private Object banklock = new Object();
-    private int balance;
+    private int balance = 0;
     private String name;
     //private int minBalance = 0;
 
@@ -12,27 +12,38 @@ public class BankAccount {
     }
 
     public int getBalance(){
-        return balance;
+        synchronized (banklock){
+            return balance;
+        }
     }
 
     public int deposit(int amount) throws InterruptedException{
+        synchronized (banklock){
             balance += amount;
-        return balance;
+            banklock.wait();
+            return balance;
+        }
     }
 
     public int withdraw(int amount) throws InterruptedException{
-            if(amount > balance)
+        synchronized (banklock){
+            if(amount > balance){
                 System.out.println("The balance is not enough, you can't withdoe corresponding money");
-            else
+            }
+            else{
                 balance -= amount;
-
-        return balance;
+            }
+            banklock.wait();
+            return balance;
+        }
     }
 
     public int generateRandomAmount() {
-        Random random = new Random();
-        int dollar = random.nextInt();
-        return dollar;
+        synchronized (banklock){
+            Random random = new Random();
+            int dollar = random.nextInt();
+            return dollar;
+        }
     }
 
 
@@ -46,7 +57,7 @@ public class BankAccount {
         int minBalance = 0;
 
         Thread t1 = new Thread(()->{
-            while(one.balance < minBalance){
+            while(one.balance > minBalance){
                 one.getBalance();
                 try {
                     one.deposit(one.generateRandomAmount());
@@ -63,7 +74,7 @@ public class BankAccount {
         });
 
         Thread t2 = new Thread(()->{
-            while(two.balance < minBalance){
+            while(two.balance > minBalance){
                 two.getBalance();
                 try {
                     two.deposit(two.generateRandomAmount());
@@ -80,7 +91,7 @@ public class BankAccount {
         });
 
         Thread t3 = new Thread(()->{
-            while(three.balance < minBalance){
+            while(three.balance > minBalance){
                 three.getBalance();
                 try {
                     three.deposit(three.generateRandomAmount());
