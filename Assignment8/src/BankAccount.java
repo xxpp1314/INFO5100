@@ -4,7 +4,6 @@ public class BankAccount {
     private Object banklock = new Object();
     private int balance = 0;
     private String name;
-    //private int minBalance = 0;
 
     public BankAccount(String name, int balance){
         this.name = name;
@@ -39,71 +38,57 @@ public class BankAccount {
     }
 
     public int generateRandomAmount() {
-        synchronized (banklock){
             Random random = new Random();
-            int dollar = random.nextInt();
+            int dollar = random.nextInt(100);
             return dollar;
-        }
     }
 
 
     public static void main(String[] args) {
-        BankAccount one = new BankAccount("Oliver", 50);
+        BankAccount one = new BankAccount("Oliver", 10);
         System.out.println(one);
-        BankAccount two = new BankAccount("Rachel", 100);
+        BankAccount two = new BankAccount("Rachel", 20);
         System.out.println(two);
-        BankAccount three = new BankAccount("Lucky", 99);
+        BankAccount three = new BankAccount("Lucky", 15);
         System.out.println(three);
-        int minBalance = 0;
+        int maxBalance = 100;
 
         Thread t1 = new Thread(()->{
-            while(one.balance > minBalance){
-                one.getBalance();
-                try {
+            try{
+                while(one.balance < maxBalance){
+                    one.getBalance();
                     one.deposit(one.generateRandomAmount());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                try {
                     one.withdraw(one.generateRandomAmount());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    one.getBalance();
                 }
-                one.getBalance();
+            }catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
 
         Thread t2 = new Thread(()->{
-            while(two.balance > minBalance){
-                two.getBalance();
-                try {
+            try{
+                while(two.balance < maxBalance){
+                    two.getBalance();
                     two.deposit(two.generateRandomAmount());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                try {
                     two.withdraw(two.generateRandomAmount());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    two.getBalance();
                 }
-                two.getBalance();
+            }catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
 
         Thread t3 = new Thread(()->{
-            while(three.balance > minBalance){
-                three.getBalance();
-                try {
+            try{
+                while(three.balance < maxBalance){
+                    three.getBalance();
                     three.deposit(three.generateRandomAmount());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                try {
                     three.withdraw(three.generateRandomAmount());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    three.getBalance();
                 }
-                three.getBalance();
+            }catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
 
@@ -115,7 +100,7 @@ public class BankAccount {
             t1.join();
             t2.join();
             t3.join();
-        } catch (Exception e ){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
